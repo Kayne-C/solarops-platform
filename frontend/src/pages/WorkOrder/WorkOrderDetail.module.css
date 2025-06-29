@@ -1,0 +1,269 @@
+.container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: var(--background-color);
+}
+
+.header {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  color: var(--text-color);
+  margin: 0;
+}
+
+.backButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--navbar-background);
+  color: var(--navbar-text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backButton:hover {
+  background-color: var(--navbar-hover);
+  color: var(--navbar-text);
+}
+
+.editButton {
+  margin-left: auto;
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0 12px;
+  transition: opacity 0.2s;
+}
+
+.editButton:hover {
+  opacity: 0.8;
+}
+
+.workOrderCard {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.detailGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailGroup label {
+  color: var(--form-label);
+  font-size: 0.875rem;
+}
+
+.detailGroup p {
+  color: var(--text-color);
+  margin: 0;
+}
+
+.activitiesSection {
+  margin-top: 2rem;
+}
+
+.sectionTitle {
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.activitiesTable {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.activitiesTable table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-color);
+}
+
+.activitiesTable th,
+.activitiesTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.activitiesTable th {
+  color: var(--text-color);
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  position: sticky;
+  top: 0;
+  background-color: var(--card-background);
+  z-index: 1;
+}
+
+.noData {
+  text-align: center;
+  color: var(--form-label);
+  padding: 2rem !important;
+}
+
+.priorityLOW {
+  color: var(--status-success);
+}
+
+.priorityMEDIUM {
+  color: var(--status-warning);
+}
+
+.priorityHIGH {
+  color: var(--status-error);
+}
+
+.priorityURGENT {
+  color: var(--status-error);
+  font-weight: 600;
+}
+
+.statusPENDING {
+  color: var(--status-info);
+}
+
+.statusIN_PROGRESS {
+  color: var(--status-warning);
+}
+
+.statusCOMPLETED {
+  color: var(--status-success);
+}
+
+.statusCANCELLED {
+  color: var(--status-error);
+}
+
+.photoList {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  max-width: 300px;
+}
+
+.photoPreview {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.photoPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noPhotos {
+  color: var(--form-label);
+  font-size: 0.875rem;
+}
+
+.activitiesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.addActivityButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-primary);
+  color: var(--button-text);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: opacity 0.2s;
+}
+
+.addActivityButton:hover {
+  opacity: 0.9;
+}
+
+.attachmentPreview {
+  display: inline-flex;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}
+
+.imagePreview {
+  display: inline-flex;
+}
+
+.previewImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s;
+}
+
+.previewImage:hover {
+  transform: scale(1.1);
+}
+
+.fileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+  margin-right: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.fileLink:hover {
+  color: var(--button-primary);
+}
+
+.morePhotos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}

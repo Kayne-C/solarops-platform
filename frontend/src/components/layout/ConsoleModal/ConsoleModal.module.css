@@ -1,0 +1,99 @@
+.consoleModal {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #00ff00;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #00ff00;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.timer {
+  font-size: 12px;
+  color: #00ff00;
+}
+
+.info {
+  margin-bottom: 12px;
+  padding: 8px;
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 4px;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.infoItem:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  color: #00ff00;
+  opacity: 0.8;
+}
+
+.value {
+  color: #00ff00;
+  font-weight: bold;
+}
+
+.logs {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 12px;
+}
+
+.log {
+  margin-bottom: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  background: rgba(0, 255, 0, 0.05);
+}
+
+.log.warning {
+  color: #ffcc00;
+  background: rgba(255, 204, 0, 0.1);
+}
+
+/* Scrollbar stilleri */
+.logs::-webkit-scrollbar {
+  width: 6px;
+}
+
+.logs::-webkit-scrollbar-track {
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 3px;
+}
+
+.logs::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 3px;
+}
+
+.logs::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.5);
+}

@@ -1,0 +1,19 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--color-gray-100);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--color-navy-800);
+}
+
+.description {
+  font-size: 1.2rem;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+}

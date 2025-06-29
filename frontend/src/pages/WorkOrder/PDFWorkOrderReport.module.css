@@ -1,0 +1,66 @@
+.coverPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coverImageBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+  filter: brightness(0.85);
+}
+
+.coverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.coverInfoBox {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
+  padding: 40px 32px;
+  min-width: 320px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.coverInfoRow {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.coverLabel {
+  font-weight: 600;
+  color: #374151;
+  min-width: 120px;
+}
+
+.coverValue {
+  color: #222;
+  font-weight: 400;
+  flex: 1;
+  word-break: break-word;
+}
