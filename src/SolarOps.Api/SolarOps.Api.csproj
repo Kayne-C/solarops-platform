@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>SolarOps.Api</RootNamespace>
+    <UserSecretsId>solarops-api</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolarOps.Infrastructure\SolarOps.Infrastructure.csproj" />
+    <ProjectReference Include="..\SolarOps.Migrations.SqlServer\SolarOps.Migrations.SqlServer.csproj" />
+    <ProjectReference Include="..\SolarOps.Migrations.Oracle\SolarOps.Migrations.Oracle.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- "Both": the generated client is used by integration tests and .NET gateway SDKs. -->
+    <Protobuf Include="Protos\yield_ingestion.proto" GrpcServices="Both" />
+  </ItemGroup>
+
+</Project>

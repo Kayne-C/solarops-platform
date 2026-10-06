@@ -1,0 +1,31 @@
+# Overlay: run the same stack on Oracle Database 23ai Free instead of SQL Server.
+#   docker compose -f docker-compose.yml -f docker-compose.oracle.yml up --build
+
+x-oracle-database: &oracle-database
+  Database__Provider: Oracle
+  Database__ConnectionString: User Id=solarops;Password=solarops;Data Source=oracle:1521/FREEPDB1
+
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim-faststart
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:-SolarOps_Dev_2026}
+      APP_USER: solarops
+      APP_USER_PASSWORD: solarops
+    ports: ["1521:1521"]
+    healthcheck:
+      test: healthcheck.sh
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  migrator:
+    environment: *oracle-database
+    depends_on: !override
+      oracle: { condition: service_healthy }
+
+  api:
+    environment: *oracle-database
+
+  worker:
+    environment: *oracle-database

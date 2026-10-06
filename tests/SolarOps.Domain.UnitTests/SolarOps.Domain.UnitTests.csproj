@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SolarOps.Domain\SolarOps.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

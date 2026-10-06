@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SolarOps.Api/SolarOps.Api.csproj" />
+    <Project Path="src/SolarOps.Application/SolarOps.Application.csproj" />
+    <Project Path="src/SolarOps.Domain/SolarOps.Domain.csproj" />
+    <Project Path="src/SolarOps.Infrastructure/SolarOps.Infrastructure.csproj" />
+    <Project Path="src/SolarOps.Migrations.Oracle/SolarOps.Migrations.Oracle.csproj" />
+    <Project Path="src/SolarOps.Migrations.SqlServer/SolarOps.Migrations.SqlServer.csproj" />
+    <Project Path="src/SolarOps.Worker/SolarOps.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SolarOps.Api.IntegrationTests/SolarOps.Api.IntegrationTests.csproj" />
+    <Project Path="tests/SolarOps.Application.UnitTests/SolarOps.Application.UnitTests.csproj" />
+    <Project Path="tests/SolarOps.ArchitectureTests/SolarOps.ArchitectureTests.csproj" />
+    <Project Path="tests/SolarOps.Domain.UnitTests/SolarOps.Domain.UnitTests.csproj" />
+    <Project Path="tests/SolarOps.Infrastructure.Tests/SolarOps.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>
