@@ -1,6 +1,6 @@
 # SolarOps Platform
 
-[![CI](https://github.com/kayne-c/test/actions/workflows/ci.yml/badge.svg)](https://github.com/kayne-c/test/actions/workflows/ci.yml)
+[![CI](https://github.com/Kayne-C/solarops-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Kayne-C/solarops-platform/actions/workflows/ci.yml)
 ![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)
 ![SQL Server | Oracle](https://img.shields.io/badge/DB-SQL%20Server%20%7C%20Oracle%2023ai-CC2927)
 ![RabbitMQ](https://img.shields.io/badge/messaging-RabbitMQ%204-FF6600)
