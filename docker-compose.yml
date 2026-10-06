@@ -1,0 +1,103 @@
+# Full distributed topology on one machine:
+#   docker compose up --build
+# API (REST + gRPC) -> SQL Server (+ outbox) -> Worker relays to RabbitMQ -> Worker consumers -> SQL Server
+# Telemetry (traces, metrics, logs) -> Aspire dashboard at http://localhost:18888
+#
+# Oracle instead of SQL Server:
+#   docker compose -f docker-compose.yml -f docker-compose.oracle.yml up --build
+
+x-dotnet-common: &dotnet-common
+  Database__Provider: SqlServer
+  Database__ConnectionString: Server=sqlserver,1433;Database=SolarOps;User Id=sa;Password=${MSSQL_SA_PASSWORD:-SolarOps_Dev_2026!};TrustServerCertificate=True
+  ConnectionStrings__Redis: redis:6379
+  Messaging__Transport: RabbitMq
+  Messaging__RabbitMq__ConnectionString: amqp://solarops:solarops@rabbitmq:5672/
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard:18889
+  OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-SolarOps_Dev_2026!}
+    ports: ["1433:1433"]
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$${MSSQL_SA_PASSWORD}" -C -Q "SELECT 1" -b -o /dev/null
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: solarops
+      RABBITMQ_DEFAULT_PASS: solarops
+    ports: ["5672:5672", "15672:15672"]
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:9.5
+    environment:
+      DASHBOARD__FRONTEND__AUTHMODE: Unsecured
+      DASHBOARD__OTLP__AUTHMODE: Unsecured
+    ports: ["18888:18888"]
+
+  # One-shot: applies EF Core migrations and seeds the demo tenants, then exits.
+  migrator:
+    build: { context: ., dockerfile: src/SolarOps.Api/Dockerfile }
+    command: ["--migrate-only"]
+    environment:
+      <<: *dotnet-common
+      ASPNETCORE_ENVIRONMENT: Docker
+      Database__ApplyMigrationsOnStartup: "true"
+      Database__SeedDemoData: "true"
+      Messaging__Outbox__Enabled: "false"
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:-docker-compose-dev-signing-key-0123456789}
+    depends_on:
+      sqlserver: { condition: service_healthy }
+    restart: "no"
+
+  api:
+    build: { context: ., dockerfile: src/SolarOps.Api/Dockerfile }
+    environment:
+      <<: *dotnet-common
+      ASPNETCORE_ENVIRONMENT: Docker
+      OTEL_SERVICE_NAME: solarops-api
+      Kestrel__Endpoints__Http__Url: http://+:8080
+      Kestrel__Endpoints__Grpc__Url: http://+:8081
+      Messaging__Outbox__Enabled: "false" # the worker relays the outbox
+      Messaging__ConsumersEnabled: "false"
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:-docker-compose-dev-signing-key-0123456789}
+    ports: ["8080:8080", "8081:8081"]
+    depends_on:
+      migrator: { condition: service_completed_successfully }
+      rabbitmq: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  worker:
+    build: { context: ., dockerfile: src/SolarOps.Worker/Dockerfile }
+    environment:
+      <<: *dotnet-common
+      DOTNET_ENVIRONMENT: Docker
+      OTEL_SERVICE_NAME: solarops-worker
+      Messaging__Outbox__Enabled: "true"
+      Messaging__ConsumersEnabled: "true"
+    depends_on:
+      migrator: { condition: service_completed_successfully }
+      rabbitmq: { condition: service_healthy }
+    deploy:
+      replicas: 2 # competing consumers; the inbox makes redeliveries harmless

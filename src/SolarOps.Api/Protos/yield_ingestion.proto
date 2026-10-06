@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "SolarOps.Api.Grpc";
+
+package solarops.ingestion.v1;
+
+// High-throughput ingestion for SCADA / data-logger gateways.
+// One client-streaming call carries daily totals for many plants; the server writes them in
+// bounded batches, so a gateway can back-fill months of history over a single HTTP/2 stream.
+service YieldIngestion {
+  rpc StreamDailyYields (stream DailyYieldReading) returns (IngestionSummary);
+}
+
+message DailyYieldReading {
+  // Plant UUID within the caller's tenant.
+  string plant_id = 1;
+  // Local plant date, ISO-8601 (yyyy-MM-dd).
+  string date = 2;
+  double energy_kwh = 3;
+}
+
+message IngestionSummary {
+  int32 received = 1;
+  int32 created = 2;
+  int32 updated = 3;
+  int32 unchanged = 4;
+  int32 rejected = 5;
+  int32 batches = 6;
+}
